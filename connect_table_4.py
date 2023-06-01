@@ -2,12 +2,14 @@ import os.path
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from  id_sheet import id_table
+import resource
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SAMPLE_SPREADSHEET_ID = id_table # здесь вводиться ссылка на вашу гугл таблицу
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'creds_130523.json') # здесь вы получаете json-файл для доступа к гугл таблице
-SAMPLE_RANGE_NAME = 'Sheet1'
+
+SCOPES: list[str] = ['https://www.googleapis.com/auth/spreadsheets']
+SAMPLE_SPREADSHEET_ID: str = id_table
+BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
+SERVICE_ACCOUNT_FILE: str = os.path.join(BASE_DIR, 'creds_130523.json')
+SAMPLE_RANGE_NAME: str = 'Sheet1'
 
 def definition_credentials(): # даёт права доступа для работы с гугл-таблицей
     credentials = service_account.Credentials.from_service_account_file(
