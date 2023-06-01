@@ -10,21 +10,20 @@ SAMPLE_SPREADSHEET_ID: str = id_table
 BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
 SERVICE_ACCOUNT_FILE: str = os.path.join(BASE_DIR, 'creds_130523.json')
 SAMPLE_RANGE_NAME: str = 'Sheet1'
-
 def definition_credentials(): # даёт права доступа для работы с гугл-таблицей
-    credentials = service_account.Credentials.from_service_account_file(
+    credentials: resource = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-    service = build('sheets', 'v4', credentials=credentials)
-    sheets = service.spreadsheets()
-    result = sheets.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='Sheet1!C1:C20').execute()
-    values = result.get('values', []) # список пользователей в столбце "С"
+    service: resource = build('sheets', 'v4', credentials=credentials)
+    sheets: resource = service.spreadsheets()
+    result: resource = sheets.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='Sheet1!C1:C20').execute()
+    values: resource = result.get('values', []) # список пользователей в столбце "С"
     return values, service, sheets, result, credentials
 
 
 
-def recording_transport_company(user_name, transport_company): # запись названия транспортной компании в таблицу
+def recording_transport_company(user_name:str, transport_company: str): # запись названия транспортной компании в таблицу
     values, service, sheets, result, credentials = definition_credentials()
-    count = 0
+    count: int = 0
     for i in values:
         count += 1
         if i[0] == user_name:
