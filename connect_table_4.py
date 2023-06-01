@@ -10,6 +10,8 @@ SAMPLE_SPREADSHEET_ID: str = id_table
 BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
 SERVICE_ACCOUNT_FILE: str = os.path.join(BASE_DIR, 'creds_130523.json')
 SAMPLE_RANGE_NAME: str = 'Sheet1'
+    
+    
 def definition_credentials(): # даёт права доступа для работы с гугл-таблицей
     credentials: resource = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
@@ -27,8 +29,8 @@ def recording_transport_company(user_name:str, transport_company: str): # зап
     for i in values:
         count += 1
         if i[0] == user_name:
-            range_ = f'Sheet1!J{count}'
-            array = {'values': [[transport_company]]}
+            range_: str = f'Sheet1!J{count}'
+            array: str = {'values': [[transport_company]]}
             service.spreadsheets().values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range_,
                                                    valueInputOption='USER_ENTERED',
                                                    body=array).execute()
