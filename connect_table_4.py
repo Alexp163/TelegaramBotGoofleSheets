@@ -2,23 +2,22 @@ import os.path
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from  id_sheet import id_table
-import resource
 
 
-SCOPES: list[str] = ['https://www.googleapis.com/auth/spreadsheets']
-SAMPLE_SPREADSHEET_ID: str = id_table
-BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
-SERVICE_ACCOUNT_FILE: str = os.path.join(BASE_DIR, 'creds_130523.json')
-SAMPLE_RANGE_NAME: str = 'Sheet1'
-    
-    
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SAMPLE_SPREADSHEET_ID = id_table
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'creds_130523.json')
+SAMPLE_RANGE_NAME = 'Sheet1'
+
+
 def definition_credentials(): # даёт права доступа для работы с гугл-таблицей
-    credentials: resource = service_account.Credentials.from_service_account_file(
+    credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-    service: resource = build('sheets', 'v4', credentials=credentials)
-    sheets: resource = service.spreadsheets()
-    result: resource = sheets.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='Sheet1!C1:C20').execute()
-    values: resource = result.get('values', []) # список пользователей в столбце "С"
+    service = build('sheets', 'v4', credentials=credentials)
+    sheets = service.spreadsheets()
+    result = sheets.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='Sheet1!C1:C20').execute()
+    values = result.get('values', []) # список пользователей в столбце "С"
     return values, service, sheets, result, credentials
 
 
@@ -31,6 +30,7 @@ def recording_transport_company(user_name:str, transport_company: str): # зап
         if i[0] == user_name:
             range_: str = f'Sheet1!J{count}'
             array: str = {'values': [[transport_company]]}
+            print(f'types = {type(array)}')
             service.spreadsheets().values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range_,
                                                    valueInputOption='USER_ENTERED',
                                                    body=array).execute()
@@ -100,5 +100,3 @@ def data_delivery_fuction(user_name):  # выводит данные доста�
     report2 += f'{values_[0][0]}\nтранспортная компания - {values_[0][1]}\nАдрес отделения - {values_[0][2]}\n\nЕсли вы хотите поменять свои данные, напишите администратору\n\n\n'
 
     return report2
-
-
