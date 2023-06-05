@@ -193,6 +193,13 @@ def entering_index_address(message):  # функция ввода индекса
 
 
 def welcome_cabinet(message):  # функция перехода кнопки в "личный кабинет"
+    """
+    1. Функция перехода в личный кабинет
+    2. Функция, которая создаст кнопку, при нажатии которой, произойдет вызов функции enter_cabinet(message) и пользователя перенаправит в личный кабинет.
+    3. Args: message: discord.Message - аргумент для взаимодействия между пользователем и ботом.
+    message.chat.id выводит сообщение пользователю в бот.
+    4. функция ничего не возвращает
+    """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     my_cabinet = types.KeyboardButton('Перейти в личный кабинет')
     markup.add(my_cabinet)
@@ -201,6 +208,13 @@ def welcome_cabinet(message):  # функция перехода кнопки в
 
 
 def start_pro(message):  # функция запуска ввода данных юзера
+    """
+    1. Функция перехода в личный кабинет
+    2. Функция, которая создаст кнопку, при нажатии которой, произойдет вызов функции enter_cabinet(message) и пользователя перенаправит в личный кабинет.
+    3. Args: message: discord.Message - аргумент для взаимодействия между пользователем и ботом.
+    message.chat.id выводит сообщение пользователю в бот.
+    4. функция ничего не возвращает
+    """
     dict_customer_data[message.chat.id] = {}
     bot.send_message(message.from_user.id, 'Введите своё Ф.И.О.')
     bot.register_next_step_handler(message, get_name)
