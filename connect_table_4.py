@@ -31,7 +31,7 @@ def definition_credentials():
 
 
 
-def recording_transport_company(user_name, transport_company):
+def recording_transport_company(user_name: str, transport_company: str):
     """
     1. функция, которая реализует запись данных о транспортной компании в таблицу.
     2. функция, которая принимает на вход два аргумента user_name и transport_company, которые будут получены от пользователя
@@ -58,7 +58,7 @@ def recording_transport_company(user_name, transport_company):
                                                    body=array).execute()
 
 
-def recording_data(user_name, dict_customer_data):
+def recording_data(user_name: str, dict_customer_data: dict):
     """
     1. функция, которая реализует запись данных о пользователе.
     2. функция, которая принимает на вход два аргумента user_name и dict_customer_data, которые будут получены от пользователя
@@ -93,7 +93,7 @@ def recording_data(user_name, dict_customer_data):
                                                    body=array).execute()
 
 
-def recording_delivery_address(user_name, dict_index_address):
+def recording_delivery_address(user_name: str, dict_index_address: dict):
     """
     1. функция, которая реализует запись данных об адрессе доставки товара.
     2. функция, которая принимает на вход два аргумента user_name и dict_index_address, которые будут получены от пользователя
@@ -128,7 +128,7 @@ def recording_delivery_address(user_name, dict_index_address):
                                                    body=array).execute()
 
 
-def data_collection_function(user_name):
+def data_collection_function(user_name: str):
     """
     1. функция, которая реализует вывод данных о заказе в бот.
     2. функция, которая принимает на вход один аргумента user_name, которые будут получены от пользователя
@@ -160,7 +160,7 @@ def data_collection_function(user_name):
     return report1
 
 
-def data_delivery_fuction(user_name):
+def data_delivery_fuction(user_name: str):
     """
     1. функция, которая реализует вывод данных о заказчике в бот.
     2. функция, которая принимает на вход один аргумента user_name, которые будут получены от пользователя
@@ -186,4 +186,3 @@ def data_delivery_fuction(user_name):
     report2 += f'{values_[0][0]}\nтранспортная компания - {values_[0][1]}\nАдрес отделения - {values_[0][2]}\n\nЕсли вы хотите поменять свои данные, напишите администратору\n\n\n'
 
     return report2
-
