@@ -16,6 +16,35 @@ dict_customer_data = {}
 transport_company = ''
 
 
+def challenge_main_menu(message: telebot.types.Message):
+    """
+    Запускает работу главного меню
+
+    Функция, которая запускает работу бота, после ввода сообщения start и
+    подгружает меню с 5-ю кнопками, а так же выводит приветствие пользователя.
+
+    Args:
+    message: telebot.types.Message - аргумент для взаимодействия между
+    пользователем и ботом.
+    message.chat.id выводит сообщение пользователю в бот
+    Returns:
+    Функция ничего не возвращает
+    """
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    main_menu = types.KeyboardButton('Главное меню')
+    calculator = types.KeyboardButton('Калькулятор')
+    personal_account = types.KeyboardButton('Личный кабинет')
+    frequent_questions = types.KeyboardButton('Частые вопросы')
+    contact_us = types.KeyboardButton('Связь с нами')
+    markup.add(main_menu)
+    markup.add(calculator)
+    markup.add(personal_account)
+    markup.add(frequent_questions)
+    markup.add(contact_us)
+    bot.send_message(message.chat.id, 'Вы вернулись в главное меню',
+                     reply_markup=markup)
+
+
 @bot.message_handler(commands=['start'])
 def start(message: telebot.types.Message):  # запуск приветствия бота и первых кнопок
     """
@@ -31,7 +60,7 @@ def start(message: telebot.types.Message):  # запуск приветстви�
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username  # определение имени пользователя 
+    user_name = message.from_user.username  # определение имени пользователя
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     main_menu = types.KeyboardButton('Главное меню')
     calculator = types.KeyboardButton('Калькулятор')
@@ -75,7 +104,7 @@ def enter_cabinet(message: telebot.types.Message):
                      reply_markup=markup)
 
 
-def work_cabinet(message: telebot.types.Message):  
+def work_cabinet(message: telebot.types.Message):
     """
     Отвечает на запросы пользователя
 
@@ -100,21 +129,11 @@ def work_cabinet(message: telebot.types.Message):
         bot.send_message(message.chat.id, 'Ваши данные для доставки',
                          reply_markup=markup)
     elif message.text == 'Вернуться в основное меню':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        main_menu = types.KeyboardButton('Главное меню')
-        calculator = types.KeyboardButton('Калькулятор')
-        personal_account = types.KeyboardButton('Личный кабинет')
-        frequent_questions = types.KeyboardButton('Частые вопросы')
-        markup.add(main_menu)
-        markup.add(calculator)
-        markup.add(personal_account)
-        markup.add(frequent_questions)
-        bot.send_message(message.chat.id, 'Вы вернулись в главное меню',
-                         reply_markup=markup)
+        challenge_main_menu(message)
 
 
 @bot.message_handler(content_types=['text'])
-def all_messages(message: telebot.types.Message):  
+def all_messages(message: telebot.types.Message):
     """
     Обрабатывает ответы на запросы пользователя
 
@@ -138,7 +157,7 @@ def all_messages(message: telebot.types.Message):
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username   # определение имени пользователя 
+    user_name = message.from_user.username
     data_delivery = data_delivery_fuction(user_name)
     data_collection = data_collection_function(user_name)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -199,16 +218,7 @@ def all_messages(message: telebot.types.Message):
                          reply_markup=markup)
         bot.send_message(message.chat.id, data_delivery)
     elif message.text == 'Вернуться в основное меню':
-        main_menu = types.KeyboardButton('Главное меню')
-        calculator = types.KeyboardButton('Калькулятор')
-        personal_account = types.KeyboardButton('Личный кабинет')
-        frequent_questions = types.KeyboardButton('Частые вопросы')
-        markup.add(main_menu)
-        markup.add(calculator)
-        markup.add(personal_account)
-        markup.add(frequent_questions)
-        bot.send_message(message.chat.id, 'Вы вернулись в главное меню',
-                         reply_markup=markup)
+        challenge_main_menu(message)
 
 
 def get_index_address(message: telebot.types.Message):
@@ -249,7 +259,7 @@ def entering_index_address(message: telebot.types.Message):
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username   # определение имени пользователя 
+    user_name = message.from_user.username
     index_address = message.text
     dict_index_address[message.chat.id]['Индекс и адрес'] = index_address
     recording_delivery_address(user_name, dict_index_address)
@@ -390,7 +400,7 @@ def get_address(message: telebot.types.Message):
     """
     address = message.text
     dict_customer_data[message.chat.id]['адрес'] = address
-    user_name = message.from_user.username  # определение имени пользователя 
+    user_name = message.from_user.username
     print(f'словарь с данными покупателя1{dict_customer_data}{user_name}')
     recording_data(user_name, dict_customer_data)
     get_transport_company(message)
