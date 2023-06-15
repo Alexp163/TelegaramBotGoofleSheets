@@ -1,3 +1,6 @@
+"""
+Файл, в котором размещены функции по взаимодействию полученного имени пользователя и телеграмм-бота
+"""
 import discord as discord
 import telebot
 from telebot import types
