@@ -2,11 +2,9 @@ import discord as discord
 import telebot
 from telebot import types
 
-from connect_table_4 import recording_data
-from connect_table_4 import data_collection_function
-from connect_table_4 import data_delivery_fuction
-from connect_table_4 import recording_delivery_address
-from connect_table_4 import recording_transport_company
+from working_table import (data_collection_function, data_delivery_fuction,
+                             recording_data, recording_delivery_address,
+                             recording_transport_company)
 
 TOKEN = '5602947799:AAHIHYWPme7pp62rtz3LUZXEbGQeGSy6rAg'
 bot = telebot.TeleBot(TOKEN)
