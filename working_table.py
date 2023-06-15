@@ -1,3 +1,9 @@
+"""
+Файл working_table.py содержит в себе функции, которые будут осуществлять 
+ввод и вывод данных из гугл таблицы при взаимодействии 
+с пользователем через телеграмм-бот посредством иморта в файл main.py 
+содержащих в себе функций.
+"""
 import os.path
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
