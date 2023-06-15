@@ -17,8 +17,7 @@ transport_company = ''
 
 
 @bot.message_handler(commands=['start'])
-def start(
-        message: telebot.types.Message):  # запуск приветствия бота и первых кнопок
+def start(message: telebot.types.Message):  # запуск приветствия бота и первых кнопок
     """
     Запускает работу телеграм-бота
 
@@ -76,8 +75,7 @@ def enter_cabinet(message: telebot.types.Message):
                      reply_markup=markup)
 
 
-def work_cabinet(
-        message: telebot.types.Message):  # функция работы в личном кабинете
+def work_cabinet(message: telebot.types.Message):  
     """
     Отвечает на запросы пользователя
 
@@ -116,8 +114,7 @@ def work_cabinet(
 
 
 @bot.message_handler(content_types=['text'])
-def all_messages(
-        message: telebot.types.Message):  # алгоритм работы и взаимодействия бота с пользователем
+def all_messages(message: telebot.types.Message):  
     """
     Обрабатывает ответы на запросы пользователя
 
