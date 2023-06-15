@@ -2,13 +2,12 @@
 Файл, в котором размещены функции по взаимодействию пользователя, телеграмм-бота,
 и гугл-таблицы с данными о пользователе
 """
-import discord as discord
 import telebot
 from telebot import types
 
 from working_table import (data_collection_function, data_delivery_fuction,
-                             recording_data, recording_delivery_address,
-                             recording_transport_company)
+                           recording_data, recording_delivery_address,
+                           recording_transport_company)
 
 TOKEN = '5602947799:AAHIHYWPme7pp62rtz3LUZXEbGQeGSy6rAg'
 bot = telebot.TeleBot(TOKEN)
@@ -17,7 +16,7 @@ dict_customer_data = {}
 transport_company = ''
 
 
-@bot.message_handler(commands=['start']) # декоратор, для входящих сообщения
+@bot.message_handler(commands=['start'])  # декоратор, для входящих сообщения
 def start(message: telebot.types.Message):
     """
     Запускает работу телеграм-бота
@@ -33,7 +32,7 @@ def start(message: telebot.types.Message):
     Функция ничего не возвращает
     """
 
-    user_name = message.from_user.username # определение имени пользователя
+    user_name = message.from_user.username  # определение имени пользователя
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     main_menu = types.KeyboardButton('Главное меню')
     calculator = types.KeyboardButton('Калькулятор')
@@ -45,7 +44,8 @@ def start(message: telebot.types.Message):
     markup.add(personal_account)
     markup.add(frequent_questions)
     markup.add(contact_us)
-    bot.send_message(message.chat.id, f'Привет! {user_name}', reply_markup=markup)
+    bot.send_message(message.chat.id, f'Привет! {user_name}',
+                     reply_markup=markup)
 
 
 def enter_cabinet(message: telebot.types.Message):
@@ -72,8 +72,9 @@ def enter_cabinet(message: telebot.types.Message):
     my_details_for_delivery = types.KeyboardButton('Мои данные для доставки')
     goto_main_menu = types.KeyboardButton('Вернуться в основное меню')
     markup.add(my_orders, track_order, my_details_for_delivery, goto_main_menu)
-    bot.send_message(message.chat.id, f'Здравствуйте пользователь,
-                     {message.from_user.username}', reply_markup=markup)
+    bot.send_message(message.chat.id, f'Здравствуйте пользователь, '
+                                      f'{message.from_user.username}',
+                     reply_markup=markup)
 
 
 def work_cabinet(message: telebot.types.Message):  # работа в личном кабинете
@@ -115,7 +116,7 @@ def work_cabinet(message: telebot.types.Message):  # работа в лично�
                          reply_markup=markup)
 
 
-@bot.message_handler(content_types=['text']) # декоратор, который будет
+@bot.message_handler(content_types=['text'])  # декоратор, который будет
 # обрабатывать входящие сообщения
 def all_messages(message: telebot.types.Message):
     """
@@ -142,7 +143,7 @@ def all_messages(message: telebot.types.Message):
     Функция ничего не возвращает
     """
 
-    user_name = message.from_user.username # определение имени пользователя
+    user_name = message.from_user.username  # определение имени пользователя
     data_delivery = data_delivery_fuction(user_name)
     data_collection = data_collection_function(user_name)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -256,7 +257,7 @@ def entering_index_address(message: telebot.types.Message):  # функция в
     Функция ничего не возвращает
     """
 
-    user_name = message.from_user.username # автоопределение имени пользователя
+    user_name = message.from_user.username  # автоопределение имени пользователя
     # запросом в бот
     index_address = message.text
     dict_index_address[message.chat.id]['Индекс и адрес'] = index_address
@@ -405,7 +406,7 @@ def get_address(message: telebot.types.Message):
 
     address = message.text
     dict_customer_data[message.chat.id]['адрес'] = address
-    user_name = message.from_user.username # автоопределение имени пользователя
+    user_name = message.from_user.username  # автоопределение имени пользователя
     # запросом в бот
     print(f'словарь с данными покупателя1{dict_customer_data}{user_name}')
     recording_data(user_name, dict_customer_data)
@@ -445,4 +446,3 @@ def get_transport_company(message: telebot.types.Message):  # функция ф�
 if __name__ == '__main__':
     print('Бот запущен!')
     bot.infinity_polling()
-    
