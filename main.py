@@ -31,7 +31,7 @@ def start(message: telebot.types.Message):  # запуск приветстви�
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username  # определение имени пользователя 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     main_menu = types.KeyboardButton('Главное меню')
     calculator = types.KeyboardButton('Калькулятор')
@@ -138,7 +138,7 @@ def all_messages(message: telebot.types.Message):
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username   # определение имени пользователя 
     data_delivery = data_delivery_fuction(user_name)
     data_collection = data_collection_function(user_name)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -249,7 +249,7 @@ def entering_index_address(message: telebot.types.Message):
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username   # определение имени пользователя 
     index_address = message.text
     dict_index_address[message.chat.id]['Индекс и адрес'] = index_address
     recording_delivery_address(user_name, dict_index_address)
@@ -390,7 +390,7 @@ def get_address(message: telebot.types.Message):
     """
     address = message.text
     dict_customer_data[message.chat.id]['адрес'] = address
-    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username  # определение имени пользователя 
     print(f'словарь с данными покупателя1{dict_customer_data}{user_name}')
     recording_data(user_name, dict_customer_data)
     get_transport_company(message)
