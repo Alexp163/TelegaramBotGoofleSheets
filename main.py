@@ -16,8 +16,9 @@ dict_customer_data = {}
 transport_company = ''
 
 
-@bot.message_handler(commands=['start']) # декоратор, который реагирует на входящие сообщения и запускает работу бота командой start
-def start(message: discord.Message):  # запуск приветствия бота и первых кнопок
+@bot.message_handler(commands=['start'])
+def start(
+        message: telebot.types.Message):  # запуск приветствия бота и первых кнопок
     """
     Запускает работу телеграм-бота
 
@@ -31,7 +32,7 @@ def start(message: discord.Message):  # запуск приветствия бо
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     main_menu = types.KeyboardButton('Главное меню')
     calculator = types.KeyboardButton('Калькулятор')
@@ -43,10 +44,11 @@ def start(message: discord.Message):  # запуск приветствия бо
     markup.add(personal_account)
     markup.add(frequent_questions)
     markup.add(contact_us)
-    bot.send_message(message.chat.id, f'Привет! {user_name}', reply_markup=markup)
+    bot.send_message(message.chat.id, f'Привет! {user_name}',
+                     reply_markup=markup)
 
 
-def enter_cabinet(message: discord.Message):
+def enter_cabinet(message: telebot.types.Message):
     """
     Запускает работу личного кабинета
 
@@ -69,10 +71,13 @@ def enter_cabinet(message: discord.Message):
     my_details_for_delivery = types.KeyboardButton('Мои данные для доставки')
     goto_main_menu = types.KeyboardButton('Вернуться в основное меню')
     markup.add(my_orders, track_order, my_details_for_delivery, goto_main_menu)
-    bot.send_message(message.chat.id, f'Здравствуйте пользователь, {message.from_user.username}', reply_markup=markup)
+    bot.send_message(message.chat.id,
+                     f'Здравствуйте пользователь, {message.from_user.username}',
+                     reply_markup=markup)
 
 
-def work_cabinet(message: discord.Message):  # функция работы в личном кабинете
+def work_cabinet(
+        message: telebot.types.Message):  # функция работы в личном кабинете
     """
     Отвечает на запросы пользователя
 
@@ -91,9 +96,11 @@ def work_cabinet(message: discord.Message):  # функция работы в л
     if message.text == 'Мои заказы':
         bot.send_message(message.chat.id, 'Ваши заказы', reply_markup=markup)
     elif message.text == 'Отследить заказ':
-        bot.send_message(message.chat.id, 'Ваш заказ отслеживается', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Ваш заказ отслеживается',
+                         reply_markup=markup)
     elif message.text == 'Мои данные для доставки':
-        bot.send_message(message.chat.id, 'Ваши данные для доставки', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Ваши данные для доставки',
+                         reply_markup=markup)
     elif message.text == 'Вернуться в основное меню':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         main_menu = types.KeyboardButton('Главное меню')
@@ -104,11 +111,13 @@ def work_cabinet(message: discord.Message):  # функция работы в л
         markup.add(calculator)
         markup.add(personal_account)
         markup.add(frequent_questions)
-        bot.send_message(message.chat.id, 'Вы вернулись в главное меню', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Вы вернулись в главное меню',
+                         reply_markup=markup)
 
 
-@bot.message_handler(content_types=['text']) # декоратор, который будет обрабатывать входящие сообщения
-def all_messages(message: discord.Message):  # алгоритм работы и взаимодействия бота с пользователем
+@bot.message_handler(content_types=['text'])
+def all_messages(
+        message: telebot.types.Message):  # алгоритм работы и взаимодействия бота с пользователем
     """
     Обрабатывает ответы на запросы пользователя
 
@@ -132,29 +141,37 @@ def all_messages(message: discord.Message):  # алгоритм работы и 
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
     data_delivery = data_delivery_fuction(user_name)
     data_collection = data_collection_function(user_name)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     if message.text == 'Главное меню':
-        bot.send_message(message.chat.id, 'Вы вошли в главное меню', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Вы вошли в главное меню',
+                         reply_markup=markup)
     elif message.text == 'Почта России':
         transport_company = message.text
         recording_transport_company(user_name, transport_company)
-        bot.send_message(message.chat.id, 'Вы выбрали "Почту России" как транспортную компанию', reply_markup=markup)
+        bot.send_message(message.chat.id,
+                         'Вы выбрали "Почту России" как транспортную компанию',
+                         reply_markup=markup)
         get_index_address(message)
     elif message.text == 'Сдек':
         transport_company = message.text
         recording_transport_company(user_name, transport_company)
-        bot.send_message(message.chat.id, 'Вы выбрали "Сдек" как транспортную компанию:', reply_markup=markup)
+        bot.send_message(message.chat.id,
+                         'Вы выбрали "Сдек" как транспортную компанию:',
+                         reply_markup=markup)
         get_index_address(message)
     elif message.text == 'Боксбери':
         transport_company = message.text
         recording_transport_company(user_name, transport_company)
-        bot.send_message(message.chat.id, 'Вы выбрали "Боксбери" как транспортную компанию', reply_markup=markup)
+        bot.send_message(message.chat.id,
+                         'Вы выбрали "Боксбери" как транспортную компанию',
+                         reply_markup=markup)
         get_index_address(message)
     elif message.text == 'Калькулятор':
-        bot.send_message(message.chat.id, 'Вы запустили калькулятор', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Вы запустили калькулятор',
+                         reply_markup=markup)
     elif message.text == 'Личный кабинет':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         enter_personal_data = types.KeyboardButton('Ввести личные данные')
@@ -169,16 +186,20 @@ def all_messages(message: discord.Message):  # алгоритм работы и 
     elif message.text == 'Пропустить ввод данных':
         get_transport_company(message)
     elif message.text == 'Частые вопросы':
-        bot.send_message(message.chat.id, 'Вы в разделе: частые вопросы', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Вы в разделе: частые вопросы',
+                         reply_markup=markup)
     elif message.text == 'Связь с нами':
-        bot.send_message(message.chat.id, 'Вы в разделе: связь с нами', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Вы в разделе: связь с нами',
+                         reply_markup=markup)
     elif message.text == 'Мои заказы':
         bot.send_message(message.chat.id, 'Ваши заказы', reply_markup=markup)
         bot.send_message(message.from_user.id, data_collection)
     elif message.text == 'Отследить заказ':
-        bot.send_message(message.chat.id, 'Ваш заказ отслеживается', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Ваш заказ отслеживается',
+                         reply_markup=markup)
     elif message.text == 'Мои данные для доставки':
-        bot.send_message(message.chat.id, 'Ваши данные для доставки', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Ваши данные для доставки',
+                         reply_markup=markup)
         bot.send_message(message.chat.id, data_delivery)
     elif message.text == 'Вернуться в основное меню':
         main_menu = types.KeyboardButton('Главное меню')
@@ -189,10 +210,11 @@ def all_messages(message: discord.Message):  # алгоритм работы и 
         markup.add(calculator)
         markup.add(personal_account)
         markup.add(frequent_questions)
-        bot.send_message(message.chat.id, 'Вы вернулись в главное меню', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Вы вернулись в главное меню',
+                         reply_markup=markup)
 
 
-def get_index_address(message: discord.Message):
+def get_index_address(message: telebot.types.Message):
     """
     Запускает ввод индекса и адреса отделения для доставки товара
 
@@ -213,7 +235,7 @@ def get_index_address(message: discord.Message):
     bot.register_next_step_handler(message, entering_index_address)
 
 
-def entering_index_address(message: discord.Message):  # функция ввода индекса и адреса
+def entering_index_address(message: telebot.types.Message):
     """
     Вводит индекс и адрес отделения для доставки товара
 
@@ -230,14 +252,14 @@ def entering_index_address(message: discord.Message):  # функция ввод
     Returns:
     Функция ничего не возвращает
     """
-    user_name = message.from_user.username # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
     index_address = message.text
     dict_index_address[message.chat.id]['Индекс и адрес'] = index_address
     recording_delivery_address(user_name, dict_index_address)
     welcome_cabinet(message)
 
 
-def welcome_cabinet(message: discord.Message):  # функция перехода кнопки в "личный кабинет"
+def welcome_cabinet(message: telebot.types.Message):
     """
     Переходит в личный кабинет
 
@@ -255,11 +277,12 @@ def welcome_cabinet(message: discord.Message):  # функция переход�
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     my_cabinet = types.KeyboardButton('Перейти в личный кабинет')
     markup.add(my_cabinet)
-    bot.send_message(message.from_user.id, 'Спасибо, что ввели данные!', reply_markup=markup)
+    bot.send_message(message.from_user.id, 'Спасибо, что ввели данные!',
+                     reply_markup=markup)
     enter_cabinet(message)
 
 
-def start_pro(message: discord.Message):  # функция запуска ввода данных юзера
+def start_pro(message: telebot.types.Message):
     """
     Подготавливает к запуску ввода данных пользователя
 
@@ -280,7 +303,7 @@ def start_pro(message: discord.Message):  # функция запуска вво
     bot.register_next_step_handler(message, get_name)
 
 
-def get_name(message: discord.Message):  # функция ввода ФИО
+def get_name(message: telebot.types.Message):
     """
     Принимает данные о ФИО пользователя, с последующей обработкой.
 
@@ -303,7 +326,7 @@ def get_name(message: discord.Message):  # функция ввода ФИО
     bot.register_next_step_handler(message, get_telephone)
 
 
-def get_telephone(message: discord.Message):  # функция ввода телефона
+def get_telephone(message: telebot.types.Message):  # функция ввода телефона
     """
     Принимает данные о телефоне пользователя, с последующей обработкой.
 
@@ -326,7 +349,7 @@ def get_telephone(message: discord.Message):  # функция ввода тел
     bot.register_next_step_handler(message, get_index)
 
 
-def get_index(message: discord.Message):  # функция ввода индекса проживания
+def get_index(message: telebot.types.Message):
     """
     Принимает данные об индексе проживания пользователя, с последующей обработкой.
 
@@ -349,7 +372,7 @@ def get_index(message: discord.Message):  # функция ввода индек
     bot.register_next_step_handler(message, get_address)
 
 
-def get_address(message: discord.Message):  # функция записи введенных данных пользователя из бота в таблицу
+def get_address(message: telebot.types.Message):
     """
     Принимает данные о адресе проживания пользователя, с последующей обработкой.
 
@@ -370,13 +393,13 @@ def get_address(message: discord.Message):  # функция записи вве
     """
     address = message.text
     dict_customer_data[message.chat.id]['адрес'] = address
-    user_name = message.from_user.username # автоопределение имени пользователя запросом в бот
+    user_name = message.from_user.username  # автоопределение имени пользователя запросом в бот
     print(f'словарь с данными покупателя1{dict_customer_data}{user_name}')
     recording_data(user_name, dict_customer_data)
     get_transport_company(message)
 
 
-def get_transport_company(message: discord.Message):  # функция фиксации данных о транспортной компании из бота в таблицу
+def get_transport_company(message: telebot.types.Message):
     """
     Запускает блок кнопок о транспортной компании пользователя
 
@@ -400,7 +423,8 @@ def get_transport_company(message: discord.Message):  # функция фикс�
     markup.add(russian_post)
     markup.add(sdek)
     markup.add(boxbery)
-    bot.send_message(message.from_user.id, 'Выберите транспортную компанию', reply_markup=markup)
+    bot.send_message(message.from_user.id, 'Выберите транспортную компанию',
+                     reply_markup=markup)
 
 
 if __name__ == '__main__':
