@@ -9,7 +9,7 @@ from working_table import (data_collection_function, data_delivery_fuction,
                            recording_data, recording_delivery_address,
                            recording_transport_company)
 
-TOKEN = '5602947799:AAHIHYWPme7pp62rtz3LUZXEbGQeGSy6rAg'
+TOKEN = '5602947799:AAHIHYWPme7plkhgijhgfp62rtSy6rAg'
 bot = telebot.TeleBot(TOKEN)
 dict_index_address = {}
 dict_customer_data = {}
