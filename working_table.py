@@ -5,7 +5,7 @@ from googleapiclient.discovery import build
 # from  id_sheet import id_table
 
 SCOPES: [str] = ['https://www.googleapis.com/auth/spreadsheets']
-SAMPLE_SPREADSHEET_ID: str = '1wgZRhyKNsZEXfm2fumy1xDeGi2fZa4J0w-eFx0dzu_8'
+SAMPLE_SPREADSHEET_ID: str = '1wgZRhyKNsZEXfm2fumy1xDeGi...'
 # здесь вводиться ссылка на вашу гугл таблицу
 
 BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
